@@ -1,4 +1,4 @@
-# OpenClaw 隐私过滤器插件 (`openclaw-privacy-filter`)
+# OpenClaw 隐私过滤器插件
 <div align="center">
   <img src="./assets/logo.png" alt="Privacy Filter Logo" width="200"/>
 </div>

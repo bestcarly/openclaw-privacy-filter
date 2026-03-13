@@ -1,27 +1,52 @@
-# OpenClaw Privacy Filter Plugin (`openclaw-privacy-filter`)
+# OpenClaw Privacy Filter Plugin
 <div align="center">
   <img src="./assets/logo.png" alt="Privacy Filter Logo" width="200"/>
 </div>
 
-`openclaw-privacy-filter` is a best-effort privacy plugin for OpenClaw.
+English | [简体中文](./README.zh-CN.md)
 
-It focuses on three practical controls that are available in the current plugin API:
+A best-effort privacy guard plugin for [OpenClaw](https://github.com/openclaw/openclaw) that provides prompt routing, transcript redaction, and outbound masking.
 
-1. Sensitive prompt routing:
-   if a prompt matches sensitive patterns, the plugin can override provider/model to a safer route (for example local provider).
-2. Transcript redaction:
-   redacts matching strings before session messages are written to JSONL.
-3. Outbound message redaction:
-   optionally redacts matching strings before final channel messages are sent.
+## Features & Architecture
 
-## Limits
+This plugin hooks into OpenClaw's plugin architecture to provide three main privacy controls:
 
-This plugin cannot rewrite the full raw LLM request payload in transit.
-The current plugin hook surface allows model/provider override and prompt guidance, but not direct mutation of all history payload fields.
+1. **Sensitive Prompt Routing**
+   When a user prompt matches defined sensitive patterns, the plugin dynamically overrides the AI provider and model (e.g., routing the request to a local, secure provider like Ollama).
 
-For strict in-flight payload replacement/restoration across every turn, core integration (like your privacy branch) is still stronger.
+2. **Transcript Redaction**
+   Scans and redacts matching sensitive strings before session messages are written to the persistent local JSONL transcript cache.
+
+3. **Outbound Message Redaction**
+   Optionally masks sensitive information in the final messages before they are dispatched to messaging channels (Telegram, Discord, etc.).
+
+### Limitations
+This plugin does not provide deep, raw payload replacement at the network layer across history. It uses the officially supported provider and chat hook APIs for content inspection and routing.
+
+## Installation
+
+As this is a standalone OpenClaw plugin, you can install it in two ways.
+
+### Method 1: Install via Archive (Recommended)
+1. Download the latest `.tgz` release from the [Releases](https://github.com/bestcarly/openclaw-privacy-filter/releases) page of this repository.
+2. Install it via the OpenClaw CLI:
+   ```bash
+   openclaw plugins install ./path/to/openclaw-privacy-filter-0.1.0.tgz
+   openclaw plugins enable privacy-filter
+   ```
+
+### Method 2: Install via Local Link (For Developers)
+Clone this repository and link it directly:
+```bash
+git clone https://github.com/bestcarly/openclaw-privacy-filter.git
+cd openclaw-privacy-filter
+openclaw plugins install -l .
+openclaw plugins enable privacy-filter
+```
 
 ## Configuration
+
+After enabling the plugin, update your `openclaw` configuration file to customize the privacy settings.
 
 ```json
 {
@@ -41,43 +66,24 @@ For strict in-flight payload replacement/restoration across every turn, core int
 }
 ```
 
-## Pattern coverage
+### Supported Redaction Patterns
+By default, the plugin automatically detects and intercepts:
+- Email addresses
+- Chinese mobile numbers
+- AWS access key IDs
+- API keys (e.g., `sk-...`, `ghp_...`)
+- Bearer tokens
+- Common secret assignments (`password=`, `api_key=`, etc.)
 
-Built-in patterns include:
+You can expand this list by providing custom JavaScript regex source strings in the `customPatterns` configuration array.
 
-- email
-- CN mobile numbers
-- AWS access key id
-- `sk-...` token style strings
-- `ghp_...` token style strings
-- `Bearer ...` auth header style
-- `api_key/token/secret/password` assignment style
+## Building / Publishing
 
-You can add custom regex sources through `customPatterns`.
-
-## Install
-
-Install from npm:
-
+To package this plugin for distribution:
 ```bash
-openclaw plugins install openclaw-privacy-filter
-openclaw plugins enable privacy-filter
+npm pack
 ```
+This will generate a `.tgz` file that you can upload to your GitHub Releases page.
 
-Install from local path (for development):
-
-```bash
-openclaw plugins install ./extensions/privacy-filter
-openclaw plugins enable privacy-filter
-```
-
-## Publish (independent)
-
-Run from `extensions/privacy-filter`:
-
-```bash
-npm publish --access public
-```
-
-Tip:
-if you want a private or personal namespace, change package name to your own scope first, for example `@your-scope/openclaw-privacy-filter`.
+## License
+MIT License
