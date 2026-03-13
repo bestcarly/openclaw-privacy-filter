@@ -77,13 +77,5 @@ By default, the plugin automatically detects and intercepts:
 
 You can expand this list by providing custom JavaScript regex source strings in the `customPatterns` configuration array.
 
-## Building / Publishing
-
-To package this plugin for distribution:
-```bash
-npm pack
-```
-This will generate a `.tgz` file that you can upload to your GitHub Releases page.
-
 ## License
 MIT License

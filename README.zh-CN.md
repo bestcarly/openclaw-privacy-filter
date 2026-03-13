@@ -77,13 +77,5 @@ openclaw plugins enable privacy-filter
 
 您可以通过在配置文件的 `customPatterns` 数组中提供自定义的 JavaScript 正则表达式（字符串形式）来扩展拦截列表。
 
-## 构建与发布
-
-如果您需要将此插件打包以供分发：
-```bash
-npm pack
-```
-这将在当前目录下生成一个 `.tgz` 压缩包文件，您可以将其上传到 GitHub 的 Releases 页面。
-
 ## 开源协议
 MIT License
