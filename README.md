@@ -1,4 +1,7 @@
-# Privacy Filter Plugin
+# OpenClaw Privacy Filter Plugin (`openclaw-privacy-filter`)
+<div align="center">
+  <img src="./assets/logo.png" alt="Privacy Filter Logo" width="200"/>
+</div>
 
 `openclaw-privacy-filter` is a best-effort privacy plugin for OpenClaw.
 
