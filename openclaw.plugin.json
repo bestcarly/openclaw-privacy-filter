@@ -1,0 +1,56 @@
+{
+  "id": "privacy-filter",
+  "name": "Privacy Filter",
+  "description": "Best-effort privacy guard for prompt routing, transcript redaction, and outbound masking.",
+  "configSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "enabled": { "type": "boolean" },
+      "secureProvider": { "type": "string" },
+      "secureModel": { "type": "string" },
+      "routeSensitivePrompts": { "type": "boolean" },
+      "redactTranscript": { "type": "boolean" },
+      "redactOutboundMessages": { "type": "boolean" },
+      "redactionToken": { "type": "string" },
+      "customPatterns": {
+        "type": "array",
+        "items": { "type": "string" }
+      }
+    }
+  },
+  "uiHints": {
+    "enabled": {
+      "label": "Enable plugin",
+      "help": "Turns privacy filtering hooks on or off."
+    },
+    "secureProvider": {
+      "label": "Secure provider override",
+      "help": "Provider id to route sensitive prompts to (for example local ollama provider)."
+    },
+    "secureModel": {
+      "label": "Secure model override",
+      "help": "Model id to route sensitive prompts to."
+    },
+    "routeSensitivePrompts": {
+      "label": "Route sensitive prompts",
+      "help": "When sensitive content is detected in the user prompt, override provider/model."
+    },
+    "redactTranscript": {
+      "label": "Redact transcript",
+      "help": "Redacts sensitive strings before writing messages to session JSONL."
+    },
+    "redactOutboundMessages": {
+      "label": "Redact outbound messages",
+      "help": "Redacts sensitive strings before sending final channel messages."
+    },
+    "redactionToken": {
+      "label": "Redaction token",
+      "help": "Replacement token used for masked text."
+    },
+    "customPatterns": {
+      "label": "Custom regex patterns",
+      "help": "Extra regex patterns (as JS regex source) to match and redact."
+    }
+  }
+}

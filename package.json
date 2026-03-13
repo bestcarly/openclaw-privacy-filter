@@ -1,0 +1,31 @@
+{
+  "name": "openclaw-privacy-filter",
+  "version": "0.1.0",
+  "description": "Privacy filter plugin for prompt routing and transcript redaction",
+  "keywords": [
+    "llm",
+    "openclaw",
+    "plugin",
+    "privacy",
+    "security"
+  ],
+  "license": "MIT",
+  "files": [
+    "index.ts",
+    "src",
+    "openclaw.plugin.json",
+    "README.md"
+  ],
+  "type": "module",
+  "peerDependencies": {
+    "openclaw": ">=2026.2.0"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "openclaw": {
+    "extensions": [
+      "./index.ts"
+    ]
+  }
+}
