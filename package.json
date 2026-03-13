@@ -9,6 +9,15 @@
     "privacy",
     "security"
   ],
+  "author": "bestcarly",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bestcarly/openclaw-privacy-filter.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bestcarly/openclaw-privacy-filter/issues"
+  },
+  "homepage": "https://github.com/bestcarly/openclaw-privacy-filter#readme",
   "license": "MIT",
   "files": [
     "index.ts",
